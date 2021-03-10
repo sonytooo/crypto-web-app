@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import _ from 'lodash/isEqual';
 import { setPair } from '../../store/actions/common';
 import { Container, Heading, HeadingContainer, CenteringWrapper, ListContainer, BackIconWrapper, SortButtonWrapper, SortButton, SortButtonArrow, ModalCloseIcon } from './styles';
 import { getPairPrices } from '../../store/actions/common';
@@ -15,8 +16,10 @@ import { getKrakenPairTrades } from '../../store/actions/kraken';
 import TradesModal from '../../components/TradesModal';
 import { getBitfinexPairTrades } from '../../store/actions/bitfinex';
 
+const isArrayEqual = (x, y) => _(x).differenceWith(y, _.isEqual).isEmpty();
+
 const Details = () => {
-    const prices = useSelector((state) => state.prices.prices);
+    const prices = useSelector((state) => state.prices.prices, isArrayEqual);
     const isLoading = useSelector((state) => state.prices.loading);
     const pair = useSelector((state) => state.prices.symbol);
     const history = useHistory();
@@ -31,6 +34,18 @@ const Details = () => {
             dispatch(getPairPrices(params.pair.replace(/-|_/gi, '').toUpperCase()));
         } else {
             history.push('/');
+        }
+    }, [])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (params.pair && params.pair.length) {
+                dispatch(getPairPrices(params.pair.replace(/-|_/gi, '').toUpperCase(), false));
+            }
+        }, 30000);
+
+        return () => {
+            clearInterval(interval);
         }
     }, [])
 

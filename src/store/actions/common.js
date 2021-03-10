@@ -5,8 +5,10 @@ import {getKrakenPairPrice} from './kraken';
 import {SET_PAIR, SET_PAIR_PRICE_LOADING} from '../types';
 import formatPrice from '../../utils/formatPrice';
 
-export const getPairPrices = (pair) => async dispatch => {
-    dispatch(setPairPricesLoading(true));
+export const getPairPrices = (pair, shouldSetLoading = true) => async dispatch => {
+    if (shouldSetLoading) {
+        dispatch(setPairPricesLoading(true));
+    }
     await Promise.all([
         dispatch(getBinancePairPrice(pair)),
         dispatch(getHuobiPairPrice(pair)),
