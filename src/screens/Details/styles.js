@@ -6,12 +6,17 @@ export const Container = styled.section`
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
-    align-items: center;
-    justify-content: center;
 	flex: 1;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-image: linear-gradient(black,rgba(0,0,0,0.6) 100%,rgba(0,0,0,0.6) 100%,rgba(0,0,0,0.6)), url(${bgImage});
+`;
+
+export const CenteringWrapper = styled.div`
+	display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const ListContainer = styled.div`
@@ -55,7 +60,7 @@ export const SortButtonArrow = styled.span`
     line-height: 10px;
     padding: 0 2px;
     color: white;
-    transform: ${props => props.rotate ? 'rotate(180deg)' : 'rotate(0deg)'};
+    transform: ${props => !!props.shouldRotate ? 'rotate(180deg)' : undefined};
 `;
 
 export const Heading = styled.h3`
@@ -63,6 +68,10 @@ export const Heading = styled.h3`
     text-align: center;
     justify-self: center;
     align-self: center;
+`;
+
+export const ModalCloseIcon = styled.img`
+	align-self: flex-end;
 `;
 
 

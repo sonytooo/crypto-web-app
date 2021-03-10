@@ -29,4 +29,15 @@ export const Pair = styled.h4`
 
 export const Price = styled.h4`
 	color: white;
+	cursor: pointer;
+	font-weight: 500;
+
+	&:hover {
+		color: var(--primaryTextColor);
+	}
+`;
+
+export const ErrorMessage = styled.h4`
+	color: var(--primaryTextColor);
+	font-weight: 300;
 `;

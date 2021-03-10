@@ -1,6 +1,6 @@
 import {proxy} from '../../config';
-import {setPrice, setPriceError, setTrades} from './common';
-import {SET_BITFINEX_PRICE, SET_BITFINEX_TRADES} from '../types';
+import {setPrice, setPriceError, setTrades, setTradesLoading} from './common';
+import {SET_BITFINEX_PRICE, SET_BITFINEX_TRADES, SET_BITFINEX_TRADES_LOADING} from '../types';
 
 export const getBitfinexPairPrice = (pair) => dispatch => {
     return fetch(`${proxy}https://api.bitfinex.com/v1/pubticker/${pair}`).then((res) => {
@@ -19,6 +19,7 @@ export const getBitfinexPairPrice = (pair) => dispatch => {
 }
 
 export const getBitfinexPairTrades = (pair) => dispatch => {
+    dispatch(setTradesLoading(SET_BITFINEX_TRADES_LOADING));
     fetch(`${proxy}https://api.bitfinex.com/v1/trades/${pair}?limit_trades=50`).then((res) => {
         return res.json();
     }).then((data) => {

@@ -1,6 +1,6 @@
 import {proxy} from '../../config';
-import {setPrice, setPriceError, setTrades, setTradesError} from './common';
-import {SET_KRAKEN_PRICE, SET_KRAKEN_TRADES} from '../types';
+import {setPrice, setPriceError, setTrades, setTradesError, setTradesLoading} from './common';
+import {SET_KRAKEN_PRICE, SET_KRAKEN_TRADES, SET_KRAKEN_TRADES_LOADING} from '../types';
 
 export const getKrakenPairPrice = (pair) => dispatch => {
     return fetch(`${proxy}https://api.kraken.com/0/public/Ticker?pair=${pair}`).then((res) => {
@@ -19,6 +19,7 @@ export const getKrakenPairPrice = (pair) => dispatch => {
 }
 
 export const getKrakenPairTrades = (pair) => dispatch => {
+    dispatch(setTradesLoading(true, SET_KRAKEN_TRADES_LOADING));
     fetch(`${proxy}https://api.kraken.com/0/public/Trades?pair=${pair}`).then((res) => {
         return res.json();
     }).then((data) => {

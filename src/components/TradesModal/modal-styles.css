@@ -1,0 +1,25 @@
+.modal {
+    position: absolute;
+    background-color: var(--darkTransparent);
+    backdrop-filter: blur(7px);
+	display: flex;
+	flex-direction: column;
+    padding: 28px 32px 16px 32px;
+    border-radius: 24px;
+    margin-bottom: 40px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 500px;
+    height: 65vh;
+    outline: none;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .8);
+  }

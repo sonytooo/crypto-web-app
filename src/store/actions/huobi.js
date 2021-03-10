@@ -1,6 +1,6 @@
 import {proxy} from '../../config';
-import {SET_HUOBI_PRICE, SET_HUOBI_TRADES} from '../types';
-import {setPrice, setPriceError, setTrades, setTradesError} from './common';
+import {SET_HUOBI_PRICE, SET_HUOBI_TRADES, SET_HUOBI_TRADES_LOADING} from '../types';
+import {setPrice, setPriceError, setTrades, setTradesError, setTradesLoading} from './common';
 
 export const getHuobiPairPrice = (pair) => dispatch => {
     return fetch(`${proxy}https://api.huobi.pro/market/trade?symbol=${pair.toLowerCase()}`).then((res) => {
@@ -20,6 +20,7 @@ export const getHuobiPairPrice = (pair) => dispatch => {
 }
 
 export const getHuobiPairTrades = (pair) => dispatch => {
+    dispatch(setTradesLoading(true, SET_HUOBI_TRADES_LOADING));
     fetch(`${proxy}https://api.huobi.pro/market/history/trade?symbol=${pair.toLowerCase()}&size=50`).then((res) => {
         return res.json();
     }).then((data) => {

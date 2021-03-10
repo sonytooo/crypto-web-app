@@ -19,7 +19,7 @@ export const setPrice = (price, type) => dispatch => {
     dispatch({
         type,
         payload: {
-            price: price.toString(),
+            price: Number(price).toFixed(5).toString(),
             error: null
         }
     });
@@ -74,4 +74,13 @@ export const setPairPricesLoading = (isLoading) => dispatch => {
         payload: isLoading
     });
 }
+
+export const setTradesLoading = (isLoading, type) => dispatch => {
+    dispatch({
+        type,
+        payload: isLoading
+    });
+}
+
+
 

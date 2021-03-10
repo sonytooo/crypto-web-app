@@ -19,7 +19,7 @@ export const Heading = styled.h3`
 
 export const InputsWrapper = styled.div`
     display: flex;
-    padding-bottom: 32px;
+    padding-bottom: 40px;
 `;
 
 export const InputsSeparator = styled.h1`
@@ -50,6 +50,13 @@ export const Input = styled.input`
         text-transform: none;
         color: rgb(52, 52, 52);
     }
+`;
+
+export const ValidationMessage = styled.h5`
+    color: red;
+    align-self: flex-start;
+    line-height: 0;
+    transform: translateY(-22px);
 `;
 
 

@@ -1,6 +1,6 @@
 import {proxy} from '../../config';
-import {setPrice, setPriceError, setTrades, setTradesError} from './common';
-import {SET_BINANCE_PRICE, SET_BINANCE_TRADES} from '../types';
+import {setPrice, setPriceError, setTrades, setTradesError, setTradesLoading} from './common';
+import {SET_BINANCE_PRICE, SET_BINANCE_TRADES, SET_BINANCE_TRADES_LOADING} from '../types';
 
 export const getBinancePairPrice = (pair) => dispatch => {
     return fetch(`${proxy}https://api.binance.com/api/v3/ticker/price?symbol=${pair}`).then((res) => {
@@ -19,6 +19,7 @@ export const getBinancePairPrice = (pair) => dispatch => {
 }
 
 export const getBinancePairTrades = (pair) => dispatch => {
+    dispatch(setTradesLoading(true, SET_BINANCE_TRADES_LOADING));
     fetch(`${proxy}https://api.binance.com/api/v3/trades?symbol=${pair}&limit=50`).then((res) => {
         return res.json();
     }).then((data) => {

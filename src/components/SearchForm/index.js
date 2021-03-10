@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { getPairPrices } from '../../store/actions/common';
+import { useHistory, useParams } from 'react-router';
 import PrimaryButton from '../Buttons/PrimaryButton';
-import {FormContainer, Heading, InputsWrapper, Input, InputsSeparator} from './style';
+import {FormContainer, Heading, InputsWrapper, Input, InputsSeparator, ValidationMessage} from './style';
 
 const SearchForm = () => {
     const history = useHistory();
-    const dispatch = useDispatch();
+    const params = useParams();
     const [firstSymbol, setFirstSymbol] = useState('');
     const [secondSymbol, setSecondSymbol] = useState('');
+    const [validationMessage, setValidationMessage] = useState(null);
 
     const onChangeFirstInput = (e) => {
         e.preventDefault();
@@ -28,14 +27,25 @@ const SearchForm = () => {
     }
 
     useEffect(() => {
+        if (params.pair && params.pair.length) {
+            history.push(`/${params.pair.toUpperCase()}/details`);
+        }
+    }, [])
+
+    useEffect(() => {
         if (firstSymbol.length || secondSymbol.length) {
-            history.replace(`/${firstSymbol.toUpperCase()}${secondSymbol.toUpperCase()}`);
+            history.replace(
+                `/${firstSymbol.toUpperCase()}${firstSymbol.length && secondSymbol.length ? '_' : ''}${secondSymbol.toUpperCase()}`
+            );
         }
     }, [firstSymbol, secondSymbol])
 
     const onSubmit = () => {
-        dispatch(getPairPrices(`${firstSymbol}${secondSymbol}`));
-        history.push(`/${firstSymbol}${secondSymbol}/details`);
+        if (firstSymbol.length && secondSymbol) {
+            history.push(`/${firstSymbol}_${secondSymbol}/details`);
+        } else {
+            setValidationMessage('* Both field are required.');
+        }
     }
 
     return (
@@ -46,6 +56,7 @@ const SearchForm = () => {
                 <InputsSeparator>/</InputsSeparator>
                 <Input placeholder="e.g. USDT" onChange={onChangeSecondInput} value={secondSymbol} />
             </InputsWrapper>
+            {!!validationMessage && <ValidationMessage>{validationMessage}</ValidationMessage>}
             <PrimaryButton text="Search" onClick={onSubmit} />
         </FormContainer>
     )
