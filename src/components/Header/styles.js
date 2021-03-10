@@ -9,6 +9,7 @@ export const HeaderContainer = styled.div`
 
 export const LogoWrapper = styled.div`
 	padding: 12px 24px;
+    cursor: pointer;
 `;
 
 export const HeadingSeparator = styled.div`
@@ -16,10 +17,12 @@ export const HeadingSeparator = styled.div`
     height: 32px;
     background-color: var(--primaryTextColor);
     margin-right: 24px;
+    cursor: default;
 `;
 
 export const Heading = styled.h4`
 	color: var(--primaryTextColor);
+    cursor: default;
 `;
 
 export const NavContainer = styled.div`
