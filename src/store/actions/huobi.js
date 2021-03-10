@@ -1,9 +1,11 @@
-import {proxy} from '../../config';
+// import {proxy} from '../../config';
+import moment from 'moment';
+import formatPrice from '../../utils/formatPrice';
 import {SET_HUOBI_PRICE, SET_HUOBI_TRADES, SET_HUOBI_TRADES_LOADING} from '../types';
 import {setPrice, setPriceError, setTrades, setTradesError, setTradesLoading} from './common';
 
 export const getHuobiPairPrice = (pair) => dispatch => {
-    return fetch(`${proxy}https://api.huobi.pro/market/trade?symbol=${pair.toLowerCase()}`).then((res) => {
+    return fetch(`/huobi/market/trade?symbol=${pair.toLowerCase()}`).then((res) => {
         return res.json();
     }).then((data) => {
         if (data.status === 'error') {
@@ -21,7 +23,7 @@ export const getHuobiPairPrice = (pair) => dispatch => {
 
 export const getHuobiPairTrades = (pair) => dispatch => {
     dispatch(setTradesLoading(true, SET_HUOBI_TRADES_LOADING));
-    fetch(`${proxy}https://api.huobi.pro/market/history/trade?symbol=${pair.toLowerCase()}&size=50`).then((res) => {
+    fetch(`/huobi/market/history/trade?symbol=${pair.toLowerCase()}&size=50`).then((res) => {
         return res.json();
     }).then((data) => {
         if (data.status === 'error') {
@@ -32,10 +34,10 @@ export const getHuobiPairTrades = (pair) => dispatch => {
             data.data.map((tradeGroup) => {
                 tradeGroup.data.map((trade) => {
                     trades.push({
-                        price: trade.price,
+                        price: formatPrice(trade.price),
                         size: trade.amount,
                         type: trade.direction,
-                        time: trade.ts
+                        time: moment(trade.ts).format('LTS')
                     })
                 })
             })

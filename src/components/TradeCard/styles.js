@@ -8,7 +8,7 @@ export const Card = styled.section`
 
 export const Text = styled.h4`
     font-weight: ${props => props.isBold ? 500 : 400};
-    color: white;
+    color: ${props => props.color || "white"};
     display: flex;
     flex: 1;
     text-align: center;

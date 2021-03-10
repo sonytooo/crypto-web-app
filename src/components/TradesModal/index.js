@@ -42,8 +42,9 @@ const TradesModal = ({openTrades, onAfterOpen, onRequestClose}) => {
             <>
                 {renderColLabels()}
                 <TradesList>
-                {trades[openTrades.toLowerCase()].trades.map((trade) => (
+                {trades[openTrades.toLowerCase()].trades.map((trade, index) => (
                     <TradeCard 
+                        key={`${index}-${trade.time}`}
                         time={trade.time} 
                         size={trade.size} 
                         price={trade.price} 

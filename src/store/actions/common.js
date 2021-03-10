@@ -3,6 +3,7 @@ import {getBitfinexPairPrice} from './bitfinex';
 import {getHuobiPairPrice} from './huobi';
 import {getKrakenPairPrice} from './kraken';
 import {SET_PAIR, SET_PAIR_PRICE_LOADING} from '../types';
+import formatPrice from '../../utils/formatPrice';
 
 export const getPairPrices = (pair) => async dispatch => {
     dispatch(setPairPricesLoading(true));
@@ -19,7 +20,7 @@ export const setPrice = (price, type) => dispatch => {
     dispatch({
         type,
         payload: {
-            price: Number(price).toFixed(5).toString(),
+            price: formatPrice(price),
             error: null
         }
     });

@@ -13,6 +13,7 @@ import { getHuobiPairTrades } from '../../store/actions/huobi';
 import { getBinancePairTrades } from '../../store/actions/binance';
 import { getKrakenPairTrades } from '../../store/actions/kraken';
 import TradesModal from '../../components/TradesModal';
+import { getBitfinexPairTrades } from '../../store/actions/bitfinex';
 
 const Details = () => {
     const prices = useSelector((state) => state.prices.prices);
@@ -61,7 +62,7 @@ const Details = () => {
         const pair = params.pair.replace(/-|_/gi, '');
         exchange === HUOBI && dispatch(getHuobiPairTrades(pair));
         exchange === BINIANCE && dispatch(getBinancePairTrades(pair));
-        exchange === BITFINEX && dispatch(getBinancePairTrades(pair));
+        exchange === BITFINEX && dispatch(getBitfinexPairTrades(pair));
         exchange === KRAKEN && dispatch(getKrakenPairTrades(pair));
         setOpenTrades(exchange);
     }
